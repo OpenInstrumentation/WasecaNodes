@@ -27,6 +27,7 @@
 #define S2 13
 #define S3 12
 #define OE 11
+//DEFINE UNIQUE GLOBAL ID VARIABLE HERE
 
 BME280_I2C bme(0x76);   //configures the address for the bme280
 OneWire onewire(oneWire_Bus);   //configures the OneWire Bus
@@ -65,7 +66,9 @@ void setup()
   Serial.begin(9600);
   LoRa.setPins(SS,RST,DI0);
   LoRa.begin(BAND,PABOOST);
-  
+
+  //SET GLOBAL UNIQUE = GET UNIQUE ID HERE
+ 
   if(!bme.begin())  //exit if the address is incorrect
   {
     Serial.println("Error");
@@ -91,6 +94,24 @@ void loop()
   int green = senseColor('G');
   int white = senseColor('W');
 
+  ///////////////////////////////////////////////////
+  // CONVERT THIS INTO JSON
+  // CREATE SINGLE JSON OBJECT, THEN LoRa.print() one time
+  /////////////////////////////////////////////////////
+  // create string variable
+  // format as json
+  // send variable over lora comms
+  /////////////////////////////////////////////////////
+  
+
+  /////////////////////////////////////////////////////
+  // OTHER TO DO ITEMS
+  // -- other soil moisture sensor
+  // -- battery life - on/off procedure
+  // -- send a measure of battery life
+  // WISH LIST OF COOL STUFF
+  // -- 
+
   //LoRa comms
   LoRa.beginPacket();
   LoRa.print(" C ");    //identifiers for data type on photon side
@@ -113,6 +134,7 @@ void loop()
   LoRa.print(white);
   LoRa.endPacket();
 
+  // Debugging
   
   Serial.print("TempBME: ");
   Serial.print(bme.getTemperature_C());
